@@ -7,6 +7,7 @@ import de.actosoft.todo_api.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class TodoService {
 
     public final TodoRepository todoRepository;
 
+
+    @Transactional
     public void createTodo(TodoDto todoDto) {
         todoRepository.save(new Todo(todoDto));
     }
@@ -24,6 +27,8 @@ public class TodoService {
         return todoRepository.findAll();
     }
 
+
+    @Transactional
     public void updateTodo(TodoDto todoDto) {
 
         Todo todo = todoRepository.findById(todoDto.id()).orElseThrow(IllegalStateException::new);
@@ -36,6 +41,7 @@ public class TodoService {
         todoRepository.save(todo);
     }
 
+    @Transactional
     public void deleteTodo(int id) {
 
         Todo todo = todoRepository.findById(id).orElseThrow(IllegalStateException::new);
