@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  database:
+    image: 'postgres:15.2'
+    environment:
+      - 'POSTGRES_PASSWORD=JAk128!=asdZ'
+      - 'POSTGRES_USER=postgres'
+      - 'POSTGRES_DB=postgres'
+    ports:
+      - '5432:5432'
+    container_name: database
+  app:
+    image: xtramarcf/todo_api:1.0
+    depends_on:
+      - database
+    container_name: todo_api
+    ports:
+      - '8181:8181'
+    environment:
+      - 'SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/postgres'
+  nginx:
+    container_name: frontend
+    image: xtramarcf/todo_frontend:1.0
+    ports:
+      - '3000:3000'
