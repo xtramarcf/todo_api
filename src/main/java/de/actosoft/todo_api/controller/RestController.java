@@ -37,8 +37,8 @@ public class RestController {
     }
 
 
-    @PostMapping("/read-all-todos")
-    public ResponseEntity<List<Todo>> readAllTodos() {
+    @GetMapping("/get-all-todos")
+    public ResponseEntity<List<Todo>> getAllTodos() {
 
         List<Todo> allTodos = todoService.readAllTodos();
 

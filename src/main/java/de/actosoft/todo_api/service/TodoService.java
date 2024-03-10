@@ -9,6 +9,8 @@ import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -58,5 +60,36 @@ public class TodoService {
                 todoDto.important(),
                 todoDto.done()
         );
+    }
+
+    public void initializeExamples() {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        List<Todo> todoList = List.of(
+                Todo.builder()
+                        .createdAt(LocalDateTime.now().format(formatter))
+                        .title("Actosoft")
+                        .content("Implementing Todo-Project.")
+                        .important(true)
+                        .done(false)
+                        .build(),
+                Todo.builder()
+                        .createdAt(LocalDateTime.now().format(formatter))
+                        .title("Sport")
+                        .content("Swimming with Max.")
+                        .important(true)
+                        .done(false)
+                        .build(),
+                Todo.builder()
+                        .createdAt(LocalDateTime.now().format(formatter))
+                        .title("Home")
+                        .content("Clean up the living room and the kitchen. ")
+                        .important(false)
+                        .done(false)
+                        .build()
+        );
+
+        todoRepository.saveAll(todoList);
     }
 }
